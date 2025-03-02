@@ -1,0 +1,21 @@
+.auth {
+    height: 460px;
+}
+
+.auth__form, .auth__change {
+    width: 50%;
+    transition: .4s ease-in;
+}
+
+.auth__change {
+    background-color: #dc3545;
+}
+
+.auth__form_active {
+    transform: translateX(100%);
+    padding-left: 20px;
+}
+
+.auth__change.auth__change_active {
+    transform: translateX(-100%);
+}

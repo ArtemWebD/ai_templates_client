@@ -1,0 +1,18 @@
+.alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    z-index: 9999;
+    transform: translateX(-50%);
+    animation: fade 1s 5s forwards;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 1;
+    }
+    
+    100% {
+        opacity: 0;
+    }
+}

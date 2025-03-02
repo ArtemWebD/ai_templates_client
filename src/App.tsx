@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext, useEffect } from 'react';
+import PageRouter from './router/PageRouter';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import AlertMessage from './components/alert/alertMessage';
+import changeTheme from './modules/color-theme/changeTheme';
+import { StoreContext } from '.';
 
 function App() {
+  const { generateTokenStore } = useContext(StoreContext);
+
+  useEffect(() => {
+    changeTheme();
+    generateTokenStore.getAll();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <PageRouter />
+      <AlertMessage />
+    </>
   );
 }
 
