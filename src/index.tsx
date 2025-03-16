@@ -10,6 +10,8 @@ import SiteStore from './store/site/siteStore';
 import WhitePageStore from './store/white-page/whitePageStore';
 import GeneratedWhitePageStore from './store/generated-white-page/generatedWhitePageStore';
 import GenerateTokenStore from './store/generate-token/generateTokenStore';
+import LoaderStore from './store/loader/loaderStore';
+import APIStore from './modules/api-store/apiStore';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -23,17 +25,22 @@ interface IStore {
   whitePageStore: WhitePageStore;
   generatedWhitePageStore: GeneratedWhitePageStore;
   generateTokenStore: GenerateTokenStore;
+  loaderStore: LoaderStore;
 }
 
 const alertStore = new AlertStore();
+const loaderStore = new LoaderStore();
+
+const apiStore = new APIStore(alertStore, loaderStore);
 
 const store = {
-  authStore: new AuthStore(alertStore),
-  templateStore: new TemplateStore(alertStore),
-  siteStore: new SiteStore(alertStore),
-  whitePageStore: new WhitePageStore(alertStore),
-  generatedWhitePageStore: new GeneratedWhitePageStore(alertStore),
-  generateTokenStore: new GenerateTokenStore(alertStore),
+  authStore: new AuthStore(apiStore),
+  templateStore: new TemplateStore(apiStore),
+  siteStore: new SiteStore(apiStore),
+  whitePageStore: new WhitePageStore(apiStore),
+  generatedWhitePageStore: new GeneratedWhitePageStore(apiStore),
+  generateTokenStore: new GenerateTokenStore(apiStore),
+  loaderStore,
   alertStore,
 }
 
