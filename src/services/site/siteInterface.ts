@@ -2,6 +2,7 @@ export interface ISite {
     id: number;
     title: string;
     path: string;
+    pages: string[];
 }
 
 export interface ISitesResponse {

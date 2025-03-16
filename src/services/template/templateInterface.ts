@@ -10,4 +10,5 @@ export interface ITemplate {
     id: number;
     title: string;
     path: string;
+    pages: string[];
 }
