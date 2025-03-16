@@ -3,6 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import WhitePageSelect from "../white-page-select/WhitePageSelect";
 import { useContext, useState } from "react";
 import { StoreContext } from "../..";
+import HelpButton from "../help-button/HelpButton";
 
 const WhitePageForm = () => {
     const { generatedWhitePageStore } = useContext(StoreContext);
@@ -70,9 +71,17 @@ const WhitePageForm = () => {
             <Form.Group className="mt-2">
                 <WhitePageSelect onSelect={(id) => setId(id)} />
             </Form.Group>
-            <Button variant="primary" type="submit" className="mt-3">
-                Создать
-            </Button>
+            <div className="d-flex align-items-center mt-3">
+                <Button variant="primary" type="submit" style={{ marginRight: "5px" }}>
+                    Создать
+                </Button>
+                <HelpButton 
+                    text="
+                        Для генерации требуются токены. Выберите свой токен в настройках, если они отсутствуют,
+                        запросите создание у администратора
+                    " 
+                />
+            </div>
         </Form>
     );
 }
