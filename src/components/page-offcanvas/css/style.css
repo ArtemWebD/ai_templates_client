@@ -1,0 +1,24 @@
+.page-offcanvas {
+    height: fit-content!important;
+}
+
+.page-offcanvas__col {
+    background-color: #898989;
+    border: 1px solid #5a5a5a;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 5px 0 5px 15px;
+    transition: .2s ease;
+}
+
+.page-offcanvas__col:hover {
+    opacity: .7;
+}
+
+.page-offcanvas__col a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
