@@ -3,7 +3,7 @@ import { StoreContext } from "../..";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import PageNavbar from "../../components/navbar/PageNavbar";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import TemplateForm from "../../components/template-form/TemplateForm";
 import TemplateList from "../../components/template-list/TemplateList";
 import SiteForm from "../../components/site-form/SiteForm";
