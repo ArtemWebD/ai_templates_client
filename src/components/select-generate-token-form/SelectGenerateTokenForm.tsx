@@ -11,7 +11,9 @@ const SelectGenerateTokenForm = () => {
     const handleChange = (value: string) => setToken(value);
 
     useEffect(() => {
-        localStorage.setItem("generateToken", token);
+        if (token) {
+            localStorage.setItem("generateToken", token);
+        }
     }, [token]);
 
     return (
