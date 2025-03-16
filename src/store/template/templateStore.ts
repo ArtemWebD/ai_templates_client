@@ -1,16 +1,16 @@
 import { makeAutoObservable } from "mobx";
 import { ITemplate } from "../../services/template/templateInterface";
-import AlertStore from "../alert/alertStore";
 import TemplateService from "../../services/template/templateService";
-import { AlertType } from "../alert/alertInterface";
+import APIStore from "../../modules/api-store/apiStore";
 
 export default class TemplateStore {
     templates: ITemplate[] = [];
-    alertStore: AlertStore;
 
-    constructor(alertStore: AlertStore) {
+    private apiStore: APIStore;
+    
+    constructor(apiStore: APIStore) {
         makeAutoObservable(this);
-        this.alertStore = alertStore;
+        this.apiStore = apiStore;
     }
 
     pushTemplate(template: ITemplate): void {
@@ -23,44 +23,43 @@ export default class TemplateStore {
 
     async getAll(): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await TemplateService.getAll();
 
             response.data.templates.forEach((template) => this.pushTemplate(template));
-        } catch (error: any) {
-            const message = error.response?.data?.message;
 
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.endRequest();
+        } catch (error: any) {
+            this.apiStore.handleError(error);
         }
     }
 
     async create(data: FormData): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await TemplateService.create(data);
 
             this.pushTemplate(response.data.template);
-            this.alertStore.show("Шаблон успешно загружен в список", AlertType.success);
-        } catch (error: any) {
-            const message = error.response?.data?.message;
 
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.endRequest("Шаблон успешно загружен в список");
+        } catch (error: any) {
+            this.apiStore.handleError(error);
         }
     }
 
     async remove(id: number): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             await TemplateService.remove(id);
 
             this.removeTemplate(id);
-        } catch (error: any) {
-            const message = error.response?.data?.message;
 
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.endRequest();
+        } catch (error: any) {
+            this.apiStore.handleError(error);
         }
     }
 }

@@ -1,19 +1,17 @@
 import { makeAutoObservable } from "mobx";
-import AlertStore from "../alert/alertStore";
 import { IGenerateToken } from "../../services/generate-token/generateTokenInterface";
-import { AlertType } from "../alert/alertInterface";
 import GenerateTokenService from "../../services/generate-token/generateToken";
+import APIStore from "../../modules/api-store/apiStore";
 
 export default class GenerateTokenStore {
-    private alertStore: AlertStore;
-
     tokens: IGenerateToken[] = [];
     userTokens: IGenerateToken[] = [];
 
-    constructor(alertStore: AlertStore) {
+    private apiStore: APIStore;
+    
+    constructor(apiStore: APIStore) {
         makeAutoObservable(this);
-        
-        this.alertStore = alertStore;
+        this.apiStore = apiStore;
     }
 
     pushToken(token: IGenerateToken): void {
@@ -40,60 +38,58 @@ export default class GenerateTokenStore {
 
     async getAll(): Promise<void> {
         try {
+            this.apiStore.startRequest();
+            
             const response = await GenerateTokenService.getAll();
 
             response.data.generateTokens.forEach((token) => this.pushToken(token));
+
+            this.apiStore.endRequest();
         } catch (error: any) {
-            const message = error.response?.data?.message;
-            
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.handleError(error);
         }
     }
 
     async getAllByUser(userId: number): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await GenerateTokenService.getAllByUser(userId);
 
             this.clearUserTokens();
             response.data.generateTokens.forEach((token) => this.pushUserToken(token));
+
+            this.apiStore.endRequest();
         } catch (error: any) {
-            const message = error.response?.data?.message;
-            
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.handleError(error);
         }
     }
 
     async create(userId: number, count: number): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await GenerateTokenService.create(userId, count);
 
             this.pushUserToken(response.data.generateToken);
-            this.alertStore.show("Токен успешно создан", AlertType.success);
+
+            this.apiStore.endRequest("Токен успешно создан");
         } catch (error: any) {
-            const message = error.response?.data?.message;
-            
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.handleError(error);
         }
     }
 
     async increaseCount(id: number, token: string, count: number): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await GenerateTokenService.increaseCount(token, count);
 
             this.updateToken(id, response.data.generateToken);
-            this.alertStore.show("Количество использований токена увеличено", AlertType.success);
+
+            this.apiStore.endRequest("Количество использований токена увеличено");
         } catch (error: any) {
-            const message = error.response?.data?.message;
-            
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.handleError(error);
         }
     }
 }

@@ -1,17 +1,16 @@
 import { makeAutoObservable } from "mobx";
-import AlertStore from "../alert/alertStore";
 import { IGeneratedWhitePage } from "../../services/generated-white-page/generatedWhitePageInterface";
-import { AlertType } from "../alert/alertInterface";
 import GeneratedWhitePageService from "../../services/generated-white-page/generatedWhitePage";
+import APIStore from "../../modules/api-store/apiStore";
 
 export default class GeneratedWhitePageStore {
-    alertStore: AlertStore;
-
     whitePages: IGeneratedWhitePage[] = [];
 
-    constructor(alertStore: AlertStore) {
+    private apiStore: APIStore;
+    
+    constructor(apiStore: APIStore) {
         makeAutoObservable(this);
-        this.alertStore = alertStore;
+        this.apiStore = apiStore;
     }
 
     pushWhitePage(whitePage: IGeneratedWhitePage): void {
@@ -24,29 +23,27 @@ export default class GeneratedWhitePageStore {
 
     async getAll(): Promise<void> {
         try {
+            this.apiStore.startRequest();
             const response = await GeneratedWhitePageService.getAll();
 
             this.clearWhitePages();
             response.data.tasks.forEach((whitePage) => this.pushWhitePage(whitePage));
+
+            this.apiStore.endRequest();
         } catch (error: any) {
-            const message = error.response?.data?.message;
-            
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.handleError(error);
         }
     }
 
     async create(id: number, prompt: string): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             await GeneratedWhitePageService.create(id, prompt);
-            this.alertStore.show("Ваш запрос генерации успешно поставлен в очередь", AlertType.success);
+
+            this.apiStore.endRequest("Ваш запрос генерации успешно поставлен в очередь");
         } catch (error: any) {
-            const message = error.response?.data?.message;
-            
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.handleError(error);
         }
     }
 }

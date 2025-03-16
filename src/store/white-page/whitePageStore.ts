@@ -1,19 +1,17 @@
 import { makeAutoObservable } from "mobx";
-import AlertStore from "../alert/alertStore";
 import { IWhitePage } from "../../services/white-page/whitePageInterface";
-import { AlertType } from "../alert/alertInterface";
 import WhitePageService from "../../services/white-page/whitePageService";
+import APIStore from "../../modules/api-store/apiStore";
 
 export default class WhitePageStore {
-    alertStore: AlertStore;
-
     whitePages: IWhitePage[] = [];
     json: string = "";
 
-    constructor(alertStore: AlertStore) {
+    private apiStore: APIStore;
+    
+    constructor(apiStore: APIStore) {
         makeAutoObservable(this);
-
-        this.alertStore = alertStore;
+        this.apiStore = apiStore;
     }
 
     pushWhitePage(whitePage: IWhitePage): void {
@@ -34,73 +32,72 @@ export default class WhitePageStore {
 
     async upload(data: FormData): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await WhitePageService.upload(data);
 
             this.pushWhitePage(response.data.whitePage);
-            this.alertStore.show("Шаблон успешно добавлен", AlertType.success);
-        } catch (error: any) {
-            const message = error.response?.data?.message;
             
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.endRequest("Шаблон успешно добавлен");
+        } catch (error: any) {
+            this.apiStore.handleError(error);
         }
     }
 
     async getAll(): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await WhitePageService.getAll();
 
             this.clearWhitePage();
             response.data.whitePages.forEach((whitePage) => this.pushWhitePage(whitePage));
+
+            this.apiStore.endRequest();
         } catch (error: any) {
-            const message = error.response?.data?.message;
-            
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.handleError(error);
         }
     }
 
     async remove(id: number): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             await WhitePageService.remove(id);
 
             this.removeWhitePage(id);
+
+            this.apiStore.endRequest();
         } catch (error: any) {
-            const message = error.response?.data?.message;
-            
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.handleError(error);
         }
     }
 
     async getJson(id: number | string): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await WhitePageService.getJson(id);
 
             this.setJson(response.data.json);
+
+            this.apiStore.endRequest();
         } catch (error: any) {
-            const message = error.response?.data?.message;
-            
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.handleError(error);
         }
     }
 
     async updateJson(id: number, json: string): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             await WhitePageService.updateJson(id, json);
 
             this.setJson(json);
+
+            this.apiStore.endRequest();
         } catch (error: any) {
-            const message = error.response?.data?.message;
-            
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.handleError(error);
         }
     }
 }

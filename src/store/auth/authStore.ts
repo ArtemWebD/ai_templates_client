@@ -1,8 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import UserService from "../../services/user/userService";
-import AlertStore from "../alert/alertStore";
-import { AlertType } from "../alert/alertInterface";
 import { IUser } from "../../services/user/userInterfaces";
+import APIStore from "../../modules/api-store/apiStore";
 
 export default class AuthStore {
     isAuth = false;
@@ -10,11 +9,11 @@ export default class AuthStore {
 
     users: IUser[] = [];
 
-    private alertStore: AlertStore;
+    private apiStore: APIStore;
 
-    constructor(alertStore: AlertStore) {
+    constructor(apiStore: APIStore) {
         makeAutoObservable(this);
-        this.alertStore = alertStore;
+        this.apiStore = apiStore;
     }
 
     setAuth(isAuth: boolean): void {
@@ -31,77 +30,75 @@ export default class AuthStore {
 
     async login(email: string, password: string): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await UserService.login(email, password);
 
             localStorage.setItem("token", response.data.accessToken);
             this.setAuth(true);
-        } catch (error: any) {
-            const message = error.response?.data?.message;
 
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.endRequest();
+        } catch (error: any) {
+            this.apiStore.handleError(error);
         }
     }
 
     async register(email: string, name: string, password: string): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await UserService.register(email, name, password);
 
             localStorage.setItem("token", response.data.accessToken);
             this.setAuth(true);
 
-            this.alertStore.show("Регистрация прошла успешно", AlertType.success);
+            this.apiStore.endRequest("Регистрация прошла успешно");
         } catch (error: any) {
-            const message = error.response?.data?.message;
-
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.handleError(error);
         }
     }
 
     async refresh(): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await UserService.refresh();
 
             localStorage.setItem("token", response.data.accessToken);
             this.setAuth(true);
+
+            this.apiStore.endRequest();
         } catch (error: any) {
             this.setAuth(false);
-            const message = error.response?.data?.message;
-
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.handleError(error);
         }
     }
 
     async checkAdmin(): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await UserService.checkAdmin();
 
             this.setAdmin(response.data.isAdmin);
-        } catch (error: any) {
-            const message = error.response?.data?.message;
 
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.endRequest();
+        } catch (error: any) {
+            this.apiStore.handleError(error);
         }
     }
 
     async getAll(): Promise<void> {
         try {
+            this.apiStore.startRequest();
+
             const response = await UserService.getAll();
 
             response.data.users.forEach((user) => this.pushUser(user));
-        } catch (error: any) {
-            const message = error.response?.data?.message;
 
-            if (message) {
-                this.alertStore.show(message, AlertType.danger);
-            }
+            this.apiStore.endRequest();
+        } catch (error: any) {
+            this.apiStore.handleError(error);
         }
     }
 }
