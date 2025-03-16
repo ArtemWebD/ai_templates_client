@@ -5,7 +5,7 @@ export default class GeneratedWhitePageService {
     static async create(id: number, prompt: string): Promise<void> {
         await API.post("/white-page/create", { id, prompt }, {
             headers: {
-                "Generate-Token": localStorage.getItem("generateToken")
+                "generate-goken": localStorage.getItem("generateToken")
             }
         });
     }
