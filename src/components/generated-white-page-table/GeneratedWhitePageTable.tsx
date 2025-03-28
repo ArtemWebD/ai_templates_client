@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Button, Table } from "react-bootstrap";
-import { StoreContext } from "../..";
 import GeneratedWhitePageRow from "./GeneratedWhitePageRow";
 import { ArrowClockwise } from "react-bootstrap-icons";
+import { StoreContext } from "../../store/store";
 
 const GeneratedWhitePageTable = () => {
     const { generatedWhitePageStore } = useContext(StoreContext);

@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import "./css/style.css";
 import { useContext, useState } from "react";
-import { StoreContext } from "../..";
 import { Row } from "react-bootstrap";
 import WhitePageElement from "./WhitePageElement";
+import { StoreContext } from "../../store/store";
 
 const WhitePageSelect = ({ onSelect }: { onSelect: (id: number) => any }) => {
     const { whitePageStore } = useContext(StoreContext);

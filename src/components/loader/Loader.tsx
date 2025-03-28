@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
-import { StoreContext } from "../..";
 import { Spinner } from "react-bootstrap";
 import "./css/style.css";
+import { StoreContext } from "../../store/store";
 
 const Loader = () => {
     const { loaderStore } = useContext(StoreContext);

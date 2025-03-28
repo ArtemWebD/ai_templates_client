@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Row } from "react-bootstrap";
-import { StoreContext } from "../..";
 import TemplateElement from "./TemplateElement";
 import "./css/style.css";
+import { StoreContext } from "../../store/store";
 
 const TemplateList = () => {
     const { templateStore } = useContext(StoreContext);

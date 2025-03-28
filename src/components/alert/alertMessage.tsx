@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Alert } from "react-bootstrap";
-import { StoreContext } from "../..";
 import "./css/style.css";
+import { StoreContext } from "../../store/store";
 
 const AlertMessage = () => {
     const { alertStore } = useContext(StoreContext);

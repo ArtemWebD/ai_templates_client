@@ -2,8 +2,8 @@ import { observer } from "mobx-react-lite"
 import { Button, Form } from "react-bootstrap";
 import WhitePageSelect from "../white-page-select/WhitePageSelect";
 import { useContext, useState } from "react";
-import { StoreContext } from "../..";
 import HelpButton from "../help-button/HelpButton";
+import { StoreContext } from "../../store/store";
 
 const WhitePageForm = () => {
     const { generatedWhitePageStore } = useContext(StoreContext);

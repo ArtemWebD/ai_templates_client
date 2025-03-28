@@ -3,10 +3,10 @@ import { ITemplate } from "../../services/template/templateInterface";
 import { SERVER_URL } from "../../constants";
 import { ArrowUpRightSquare, Trash } from "react-bootstrap-icons";
 import { useContext } from "react";
-import { StoreContext } from "../..";
 import PageOffcanvas from "../page-offcanvas/PageOffcanvas";
 import DeleteSubmitModal from "../delete-submit-modal/DeleteSubmitModal";
 import { IDeleteButtonParams } from "../delete-submit-modal/deleteSubmitModalParams";
+import { StoreContext } from "../../store/store";
 
 const DeleteButton = ({ onClick }: IDeleteButtonParams) => {
     return (

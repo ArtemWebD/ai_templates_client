@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import { StoreContext } from "../..";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import PageNavbar from "../../components/navbar/PageNavbar";
@@ -11,6 +10,7 @@ import SiteList from "../../components/site-list/SiteList";
 import ModalButton from "../../components/modal-button/ModalButton";
 import WhitePageForm from "../../components/white-page-form/WhitePageForm";
 import GeneratedWhitePageTable from "../../components/generated-white-page-table/GeneratedWhitePageTable";
+import { StoreContext } from "../../store/store";
 
 const MainPage = () => {
     const { authStore, templateStore, siteStore, whitePageStore, generatedWhitePageStore } = useContext(StoreContext);

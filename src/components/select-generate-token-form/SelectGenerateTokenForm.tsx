@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
-import { StoreContext } from "../..";
 import { Form } from "react-bootstrap";
+import { StoreContext } from "../../store/store";
 
 const SelectGenerateTokenForm = () => {
     const { generateTokenStore } = useContext(StoreContext);

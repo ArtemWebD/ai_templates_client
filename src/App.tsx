@@ -3,7 +3,7 @@ import PageRouter from './router/PageRouter';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AlertMessage from './components/alert/alertMessage';
 import changeTheme from './modules/color-theme/changeTheme';
-import { StoreContext } from '.';
+import { StoreContext } from './store/store';
 import Loader from './components/loader/Loader';
 import DeleteSubmitState from './modules/delete-submit/deleteSubmitState';
 

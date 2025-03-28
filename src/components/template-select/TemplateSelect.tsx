@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite"
 import { Form } from "react-bootstrap";
 import { ITemplateSelectParams } from "./templateSelectParams";
 import { useContext } from "react";
-import { StoreContext } from "../..";
+import { StoreContext } from "../../store/store";
 
 const TemplateSelect = ({ name }: ITemplateSelectParams) => {
     const { templateStore } = useContext(StoreContext);

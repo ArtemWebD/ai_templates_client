@@ -3,11 +3,11 @@ import { useContext, useEffect } from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { StoreContext } from "../..";
 import { Link } from "react-router-dom";
 import { Gear } from "react-bootstrap-icons";
 import IconModalButton from "../modal-button/IconModalButton";
 import Settings from "../settings/Settings";
+import { StoreContext } from "../../store/store";
 
 const PageNavbar = () => {
     const { authStore } = useContext(StoreContext);

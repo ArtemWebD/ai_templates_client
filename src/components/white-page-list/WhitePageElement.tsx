@@ -2,10 +2,10 @@ import { Col } from "react-bootstrap";
 import { SERVER_URL } from "../../constants";
 import { ArrowUpRightSquare, Trash } from "react-bootstrap-icons";
 import { useContext } from "react";
-import { StoreContext } from "../..";
 import { IWhitePage } from "../../services/white-page/whitePageInterface";
 import { IDeleteButtonParams } from "../delete-submit-modal/deleteSubmitModalParams";
 import DeleteSubmitModal from "../delete-submit-modal/DeleteSubmitModal";
+import { StoreContext } from "../../store/store";
 
 const DeleteButton = ({ onClick }: IDeleteButtonParams) => {
     return (

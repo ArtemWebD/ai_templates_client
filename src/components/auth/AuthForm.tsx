@@ -1,9 +1,9 @@
 import { Button, Form, FormControl, FormGroup, FormLabel, FormText } from "react-bootstrap";
 import { IAuthFormParams } from "./AuthFormParams";
 import { useContext } from "react";
-import { StoreContext } from "../..";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import { StoreContext } from "../../store/store";
 
 const AuthForm = ({ isEnter }: IAuthFormParams) => {
     const { authStore } = useContext(StoreContext);

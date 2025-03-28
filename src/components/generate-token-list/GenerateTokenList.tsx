@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Table } from "react-bootstrap";
-import { StoreContext } from "../..";
 import GenerateTokenElement from "./GenerateTokenElement";
 import HelpButton from "../help-button/HelpButton";
+import { StoreContext } from "../../store/store";
 
 const GenerateTokenList = ({ userId }: { userId: number }) => {
     const { generateTokenStore } = useContext(StoreContext);

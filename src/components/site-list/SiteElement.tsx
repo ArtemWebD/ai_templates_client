@@ -2,11 +2,11 @@ import { Col } from "react-bootstrap";
 import { SERVER_URL } from "../../constants";
 import { ArrowUpRightSquare, Trash } from "react-bootstrap-icons";
 import { useContext } from "react";
-import { StoreContext } from "../..";
 import { ISite } from "../../services/site/siteInterface";
 import PageOffcanvas from "../page-offcanvas/PageOffcanvas";
 import { IDeleteButtonParams } from "../delete-submit-modal/deleteSubmitModalParams";
 import DeleteSubmitModal from "../delete-submit-modal/DeleteSubmitModal";
+import { StoreContext } from "../../store/store";
 
 const DeleteElement = ({ onClick }: IDeleteButtonParams) => {
     return (

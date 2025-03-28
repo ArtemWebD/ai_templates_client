@@ -4,9 +4,9 @@ import ModalButton from "../../components/modal-button/ModalButton";
 import WhitePageAdminForm from "../../components/white-page-admin-form/WhitePageAdminForm";
 import WhitePageList from "../../components/white-page-list/WhitePageList";
 import { useContext, useEffect } from "react";
-import { StoreContext } from "../..";
 import UserList from "../../components/user-list/UserList";
 import { useNavigate } from "react-router-dom";
+import { StoreContext } from "../../store/store";
 
 const AdminPage = () => {
     const { whitePageStore, authStore } = useContext(StoreContext);

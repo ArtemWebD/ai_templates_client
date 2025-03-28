@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
-import { StoreContext } from "../..";
+import { StoreContext } from "../../store/store";
 
 const GenerateTokenForm = ({ userId }: { userId: number }) => {
     const { generateTokenStore } = useContext(StoreContext);

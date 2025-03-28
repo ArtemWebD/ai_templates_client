@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
-import { StoreContext } from "../..";
+import { StoreContext } from "../../store/store";
 
 const TemplateForm = () => {
     const { templateStore } = useContext(StoreContext);

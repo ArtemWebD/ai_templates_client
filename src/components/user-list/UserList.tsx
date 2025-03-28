@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Table } from "react-bootstrap";
-import { StoreContext } from "../..";
 import UserElement from "./UserElement";
+import { StoreContext } from "../../store/store";
 
 const UserList = () => {
     const { authStore } = useContext(StoreContext);

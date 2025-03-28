@@ -1,8 +1,8 @@
 import { Form } from "react-bootstrap";
 import { IGenerateToken } from "../../services/generate-token/generateTokenInterface";
 import { useContext } from "react";
-import { StoreContext } from "../..";
 import { observer } from "mobx-react-lite";
+import { StoreContext } from "../../store/store";
 
 const GenerateTokenElement = ({ token }: { token: IGenerateToken }) => {
     const { count, createdAt, id } = token;
